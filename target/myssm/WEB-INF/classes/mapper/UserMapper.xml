@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.qf.bean.User">
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_gender" jdbcType="INTEGER" property="userGender" />
+    <result column="user_status" jdbcType="INTEGER" property="userStatus" />
+    <result column="user_area" jdbcType="VARCHAR" property="userArea" />
+    <result column="user_introduction" jdbcType="VARCHAR" property="userIntroduction" />
+    <result column="user_total_answers" jdbcType="INTEGER" property="userTotalAnswers" />
+    <result column="user_avg_score" jdbcType="DOUBLE" property="userAvgScore" />
+    <result column="user_accuracy" jdbcType="DOUBLE" property="userAccuracy" />
+    <result column="user_exam_times" jdbcType="INTEGER" property="userExamTimes" />
+    <result column="user_passtime" jdbcType="INTEGER" property="userPasstime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, user_name, user_gender, user_status, user_area, user_introduction, user_total_answers, 
+    user_avg_score, user_accuracy, user_exam_times, user_passtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.bean.User">
+    insert into user (user_id, user_name, user_gender, 
+      user_status, user_area, user_introduction, 
+      user_total_answers, user_avg_score, user_accuracy, 
+      user_exam_times, user_passtime)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, 
+      #{userStatus,jdbcType=INTEGER}, #{userArea,jdbcType=VARCHAR}, #{userIntroduction,jdbcType=VARCHAR}, 
+      #{userTotalAnswers,jdbcType=INTEGER}, #{userAvgScore,jdbcType=DOUBLE}, #{userAccuracy,jdbcType=DOUBLE}, 
+      #{userExamTimes,jdbcType=INTEGER}, #{userPasstime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.bean.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userGender != null">
+        user_gender,
+      </if>
+      <if test="userStatus != null">
+        user_status,
+      </if>
+      <if test="userArea != null">
+        user_area,
+      </if>
+      <if test="userIntroduction != null">
+        user_introduction,
+      </if>
+      <if test="userTotalAnswers != null">
+        user_total_answers,
+      </if>
+      <if test="userAvgScore != null">
+        user_avg_score,
+      </if>
+      <if test="userAccuracy != null">
+        user_accuracy,
+      </if>
+      <if test="userExamTimes != null">
+        user_exam_times,
+      </if>
+      <if test="userPasstime != null">
+        user_passtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null">
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userArea != null">
+        #{userArea,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntroduction != null">
+        #{userIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="userTotalAnswers != null">
+        #{userTotalAnswers,jdbcType=INTEGER},
+      </if>
+      <if test="userAvgScore != null">
+        #{userAvgScore,jdbcType=DOUBLE},
+      </if>
+      <if test="userAccuracy != null">
+        #{userAccuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="userExamTimes != null">
+        #{userExamTimes,jdbcType=INTEGER},
+      </if>
+      <if test="userPasstime != null">
+        #{userPasstime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.bean.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userGender != null">
+        user_gender = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null">
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userArea != null">
+        user_area = #{userArea,jdbcType=VARCHAR},
+      </if>
+      <if test="userIntroduction != null">
+        user_introduction = #{userIntroduction,jdbcType=VARCHAR},
+      </if>
+      <if test="userTotalAnswers != null">
+        user_total_answers = #{userTotalAnswers,jdbcType=INTEGER},
+      </if>
+      <if test="userAvgScore != null">
+        user_avg_score = #{userAvgScore,jdbcType=DOUBLE},
+      </if>
+      <if test="userAccuracy != null">
+        user_accuracy = #{userAccuracy,jdbcType=DOUBLE},
+      </if>
+      <if test="userExamTimes != null">
+        user_exam_times = #{userExamTimes,jdbcType=INTEGER},
+      </if>
+      <if test="userPasstime != null">
+        user_passtime = #{userPasstime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.bean.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_gender = #{userGender,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      user_area = #{userArea,jdbcType=VARCHAR},
+      user_introduction = #{userIntroduction,jdbcType=VARCHAR},
+      user_total_answers = #{userTotalAnswers,jdbcType=INTEGER},
+      user_avg_score = #{userAvgScore,jdbcType=DOUBLE},
+      user_accuracy = #{userAccuracy,jdbcType=DOUBLE},
+      user_exam_times = #{userExamTimes,jdbcType=INTEGER},
+      user_passtime = #{userPasstime,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>
