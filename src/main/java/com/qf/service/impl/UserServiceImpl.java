@@ -1,48 +1,46 @@
 package com.qf.service.impl;
 
 import com.qf.bean.User;
-import com.qf.dao.UserMapper;
+import com.qf.dao.UserDao;
 import com.qf.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * 鸡你太美
+ * @Description:
+ * @Auther: 费龙衍
+ * @Date: 2019/8/12 12:06
+ * @Signature: 面 向 对 象 面 向 君 , 不 负 代 码 不 负 卿
  */
 @Service
 public class UserServiceImpl implements UserService {
 
     @Resource
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Override
-    public int deleteByPrimaryKey(Integer userId) {
-        return userMapper.deleteByPrimaryKey(userId);
+    public User finduser(String userphone) {
+        Map map=new HashMap();
+        map.put("userphone",userphone);
+        return userDao.finduser(map);
     }
 
     @Override
-    public int insert(User record) {
-        return 0;
-    }
-
-    @Override
-    public int insertSelective(User record) {
-        return userMapper.insertSelective(record);
-    }
-
-    @Override
-    public User selectByPrimaryKey(Integer userId) {
-        return userMapper.selectByPrimaryKey(userId);
-    }
-
-    @Override
-    public int updateByPrimaryKeySelective(User record) {
-        return userMapper.updateByPrimaryKeySelective(record);
-    }
-
-    @Override
-    public int updateByPrimaryKey(User record) {
-        return 0;
+    @Transactional
+    public int insertuser(String userphone) {
+        User user=new User();
+        StringBuffer nick=new StringBuffer("用户"+(int) (Math.random()*8+1));
+        for (int i=0;i<9;i++){
+            nick.append((int)Math.random()*9);
+        }
+        String usernick=nick.toString();
+        user.setUserPhone(userphone);
+        user.setUserNick(usernick);
+        int k=userDao.insertSelective(user);
+        return k;
     }
 }

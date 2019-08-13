@@ -1,10 +1,7 @@
 package com.qf.bean;
 
-public class VipQuestionBank {
-
+public class ExaminationQuestion1 {
     private Integer id;
-
-    private Integer bankno;
 
     private String question;
 
@@ -22,29 +19,12 @@ public class VipQuestionBank {
 
     private String url;
 
-    private Integer wrongnumber;
-
-    private Integer iswrong;
-
-    private Integer iscollected;
-
-    private Integer isanswered;
-
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getBankno() {
-        return bankno;
-    }
-
-    public void setBankno(Integer bankno) {
-        this.bankno = bankno;
     }
 
     public String getQuestion() {
@@ -109,37 +89,5 @@ public class VipQuestionBank {
 
     public void setUrl(String url) {
         this.url = url == null ? null : url.trim();
-    }
-
-    public Integer getWrongnumber() {
-        return wrongnumber;
-    }
-
-    public void setWrongnumber(Integer wrongnumber) {
-        this.wrongnumber = wrongnumber;
-    }
-
-    public Integer getIswrong() {
-        return iswrong;
-    }
-
-    public void setIswrong(Integer iswrong) {
-        this.iswrong = iswrong;
-    }
-
-    public Integer getIscollected() {
-        return iscollected;
-    }
-
-    public void setIscollected(Integer iscollected) {
-        this.iscollected = iscollected;
-    }
-
-    public Integer getIsanswered() {
-        return isanswered;
-    }
-
-    public void setIsanswered(Integer isanswered) {
-        this.isanswered = isanswered;
     }
 }

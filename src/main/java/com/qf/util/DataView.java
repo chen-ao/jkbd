@@ -6,10 +6,11 @@ import java.util.List;
  * 鸡你太美
  */
 
-public class Dataview<T> {
+public class DataView<T> {
     private Integer code;
     private String msg;
-    private List<T> data;
+    private T data;
+    private List<T> dataList;
 
     public Integer getCode() {
         return code;
@@ -27,11 +28,19 @@ public class Dataview<T> {
         this.msg = msg;
     }
 
-    public List<T> getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(List<T> data) {
+    public void setData(T data) {
         this.data = data;
+    }
+
+    public List<T> getDataList() {
+        return dataList;
+    }
+
+    public void setDataList(List<T> dataList) {
+        this.dataList = dataList;
     }
 }

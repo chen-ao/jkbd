@@ -2,17 +2,16 @@ package com.qf.service;
 
 import com.qf.bean.User;
 
+/**
+ * @Description:
+ * @Auther: 费龙衍
+ * @Date: 2019/8/12 12:05
+ * @Signature: 面 向 对 象 面 向 君 , 不 负 代 码 不 负 卿
+ */
 public interface UserService {
-    int deleteByPrimaryKey(Integer userId);
 
-    int insert(User record);
+    User finduser(String userphone);
 
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(Integer userId);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
+    int insertuser(String userphone);
 
 }

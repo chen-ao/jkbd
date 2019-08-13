@@ -4,7 +4,7 @@ import com.qf.bean.EasyWrong;
 import com.qf.bean.VipQuestionBank;
 import com.qf.service.EasywrongService;
 import com.qf.service.VipQuestionBankService;
-import com.qf.util.Dataview;
+import com.qf.util.DataView;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,18 +29,18 @@ public class VipQuestionBankController {
      * @return
      */
     @RequestMapping("/selectVipBank")
-    public Dataview getAll(){
-        Dataview<VipQuestionBank> dataview = new Dataview<>();
-        dataview.setCode(0);
+    public DataView getAll(){
+        DataView<VipQuestionBank> dataView = new DataView<>();
+        dataView.setCode(0);
 
         List<VipQuestionBank> vipQuestionBankList = vipQuestionBankService.findAll();
 
         if(vipQuestionBankList!=null){
-            dataview.setMsg("成功");
-            dataview.setData(vipQuestionBankList);
+            dataView.setMsg("成功");
+            dataView.setDataList(vipQuestionBankList);
         }
 
-        return dataview;
+        return dataView;
     }
 
     /**
@@ -63,13 +63,13 @@ public class VipQuestionBankController {
      * @return
      */
     @RequestMapping("/selectEasyWrongs")
-    public Dataview getAllEasyWrongs(){
-        Dataview<EasyWrong> dataview = new Dataview<>();
-        dataview.setCode(0);
-        dataview.setMsg("成功");
+    public DataView getAllEasyWrongs(){
+        DataView<EasyWrong> dataView = new DataView<>();
+        dataView.setCode(0);
+        dataView.setMsg("成功");
         List<EasyWrong> easyWrongList = easywrongService.getall();
-        dataview.setData(easyWrongList);
-        return dataview;
+        dataView.setDataList(easyWrongList);
+        return dataView;
     }
 
     /**
@@ -92,8 +92,8 @@ public class VipQuestionBankController {
      * @return
      */
     @RequestMapping("/selectVipForRandom")
-    public Dataview selectForRandom(){
-        Dataview dataView = new Dataview();
+    public DataView selectForRandom(){
+        DataView dataView = new DataView();
         //调用service
         List<VipQuestionBank> vipForRandomList = vipQuestionBankService.selectVipForRandom();
         if (vipForRandomList !=null){

@@ -1,7 +1,7 @@
 package com.qf.bean;
 
 public class EasyWrong {
-    private Integer iid;
+
 
     private Integer id;
 
@@ -31,13 +31,6 @@ public class EasyWrong {
 
     private Integer isanswered;
 
-    public Integer getIid() {
-        return iid;
-    }
-
-    public void setIid(Integer iid) {
-        this.iid = iid;
-    }
 
     public Integer getId() {
         return id;

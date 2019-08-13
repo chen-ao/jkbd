@@ -19,7 +19,7 @@ public class VipQuestionBankServiceImpl implements VipQuestionBankService {
     private VipQuestionBankMapper vipQuestionBankMapper;
 
     @Override
-    public int deleteByPrimaryKey(Integer iid) {
+    public int deleteByPrimaryKey(Integer id) {
         return 0;
     }
 

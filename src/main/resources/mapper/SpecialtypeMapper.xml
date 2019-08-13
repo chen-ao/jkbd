@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.SpecialtypeDao">
+  <resultMap id="BaseResultMap" type="com.qf.bean.Specialtype">
+    <result column="specialtypeid" jdbcType="INTEGER" property="specialtypeid" />
+    <result column="specialtypename" jdbcType="VARCHAR" property="specialtypename" />
+      <result column="total" jdbcType="INTEGER" property="total"/>
+  </resultMap>
+
+  <select id="specialtypetest" resultMap="BaseResultMap">
+        select specialtypeid,specialtypename,count(0) total from subject1 s,specialtype t where s.stid=t.specialtypeid group by stid
+  </select>
+
+  <select id="errorSTtest" resultMap="BaseResultMap">
+    select specialtypeid,specialtypename,count(*) total from subject1 s,specialtype t,finished f
+    where s.subject1_id=f.qid and s.stid=t.specialtypeid and f.rwstatus=1 GROUP BY s.stid
+  </select>
+
+  <insert id="insert" parameterType="com.qf.bean.Specialtype">
+    insert into specialtype (specialtypeid, specialtypename)
+    values (#{specialtypeid,jdbcType=INTEGER}, #{specialtypename,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.bean.Specialtype">
+    insert into specialtype
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="specialtypeid != null">
+        specialtypeid,
+      </if>
+      <if test="specialtypename != null">
+        specialtypename,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="specialtypeid != null">
+        #{specialtypeid,jdbcType=INTEGER},
+      </if>
+      <if test="specialtypename != null">
+        #{specialtypename,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

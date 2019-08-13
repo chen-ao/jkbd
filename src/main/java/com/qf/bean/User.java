@@ -3,6 +3,16 @@ package com.qf.bean;
 public class User {
     private Integer userId;
 
+    private String userPortrait;
+
+    private String userPhone;
+
+    private String userNick;
+
+    private String userPassword;
+
+    private String userSalt;
+
     private String userName;
 
     private Integer userGender;
@@ -29,6 +39,46 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public String getUserPortrait() {
+        return userPortrait;
+    }
+
+    public void setUserPortrait(String userPortrait) {
+        this.userPortrait = userPortrait == null ? null : userPortrait.trim();
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone == null ? null : userPhone.trim();
+    }
+
+    public String getUserNick() {
+        return userNick;
+    }
+
+    public void setUserNick(String userNick) {
+        this.userNick = userNick == null ? null : userNick.trim();
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword == null ? null : userPassword.trim();
+    }
+
+    public String getUserSalt() {
+        return userSalt;
+    }
+
+    public void setUserSalt(String userSalt) {
+        this.userSalt = userSalt == null ? null : userSalt.trim();
     }
 
     public String getUserName() {

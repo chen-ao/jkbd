@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qf.dao.UserMapper">
+<mapper namespace="com.qf.dao.UserDao">
   <resultMap id="BaseResultMap" type="com.qf.bean.User">
     <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_portrait" jdbcType="VARCHAR" property="userPortrait" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_nick" jdbcType="VARCHAR" property="userNick" />
+    <result column="user_password" jdbcType="VARCHAR" property="userPassword" />
+    <result column="user_salt" jdbcType="VARCHAR" property="userSalt" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="user_gender" jdbcType="INTEGER" property="userGender" />
     <result column="user_status" jdbcType="INTEGER" property="userStatus" />
@@ -15,11 +20,18 @@
     <result column="user_passtime" jdbcType="INTEGER" property="userPasstime" />
   </resultMap>
   <sql id="Base_Column_List">
-    user_id, user_name, user_gender, user_status, user_area, user_introduction, user_total_answers, 
-    user_avg_score, user_accuracy, user_exam_times, user_passtime
+    user_id, user_portrait, user_phone, user_nick, user_password,user_salt, user_name, user_gender,
+    user_status, user_area, user_introduction, user_total_answers, user_avg_score, user_accuracy,
+    user_exam_times, user_passtime
   </sql>
+
+  <select id="finduser" resultMap="BaseResultMap">
+    select * from user where use_phone=#{usephone}
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from user
     where user_id = #{userId,jdbcType=INTEGER}
@@ -29,20 +41,39 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.qf.bean.User">
-    insert into user (user_id, user_name, user_gender, 
-      user_status, user_area, user_introduction, 
-      user_total_answers, user_avg_score, user_accuracy, 
-      user_exam_times, user_passtime)
-    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{userGender,jdbcType=INTEGER}, 
-      #{userStatus,jdbcType=INTEGER}, #{userArea,jdbcType=VARCHAR}, #{userIntroduction,jdbcType=VARCHAR}, 
-      #{userTotalAnswers,jdbcType=INTEGER}, #{userAvgScore,jdbcType=DOUBLE}, #{userAccuracy,jdbcType=DOUBLE}, 
-      #{userExamTimes,jdbcType=INTEGER}, #{userPasstime,jdbcType=INTEGER})
+    insert into user (user_id, user_portrait, user_phone,
+      user_nick, user_password,user_salt, user_name,
+      user_gender, user_status, user_area,
+      user_introduction, user_total_answers, user_avg_score,
+      user_accuracy, user_exam_times, user_passtime
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userPortrait,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR},
+      #{userNick,jdbcType=VARCHAR}, #{userPassword,jdbcType=VARCHAR},#{userSalt,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+      #{userGender,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER}, #{userArea,jdbcType=VARCHAR},
+      #{userIntroduction,jdbcType=VARCHAR}, #{userTotalAnswers,jdbcType=INTEGER}, #{userAvgScore,jdbcType=DOUBLE},
+      #{userAccuracy,jdbcType=DOUBLE}, #{userExamTimes,jdbcType=INTEGER}, #{userPasstime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.qf.bean.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="userPortrait != null">
+        user_portrait,
+      </if>
+      <if test="userPhone != null">
+        user_phone,
+      </if>
+      <if test="userNick != null">
+        user_nick,
+      </if>
+      <if test="userPassword != null">
+        user_password,
+      </if>
+      <if test="userSalt != null">
+        user_salt,
       </if>
       <if test="userName != null">
         user_name,
@@ -79,6 +110,21 @@
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
+      <if test="userPortrait != null">
+        #{userPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null">
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userNick != null">
+        #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userSalt != null">
+        #{userSalt,jdbcType=VARCHAR},
+      </if>
       <if test="userName != null">
         #{userName,jdbcType=VARCHAR},
       </if>
@@ -114,6 +160,21 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.qf.bean.User">
     update user
     <set>
+      <if test="userPortrait != null">
+        user_portrait = #{userPortrait,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null">
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userNick != null">
+        user_nick = #{userNick,jdbcType=VARCHAR},
+      </if>
+      <if test="userPassword != null">
+        user_password = #{userPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="userSalt != null">
+        user_salt = #{userSalt,jdbcType=VARCHAR},
+      </if>
       <if test="userName != null">
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
@@ -149,7 +210,12 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.qf.bean.User">
     update user
-    set user_name = #{userName,jdbcType=VARCHAR},
+    set user_portrait = #{userPortrait,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_nick = #{userNick,jdbcType=VARCHAR},
+      user_password = #{userPassword,jdbcType=VARCHAR},
+      user_salt = #{userSalt,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
       user_gender = #{userGender,jdbcType=INTEGER},
       user_status = #{userStatus,jdbcType=INTEGER},
       user_area = #{userArea,jdbcType=VARCHAR},

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
@@ -18,15 +18,11 @@ http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/tx
                            http://www.springframework.org/schema/tx/spring-tx.xsd
 ">
-    <!--1.扫描注解包-->
-    <context:component-scan base-package="com.qf"></context:component-scan>
-    <!--2.创建视图解析器-->
-    <bean id="s" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="suffix" value=".jsp"/>
-        <property name="prefix" value="/"/>
-    </bean>
+
+
+    <context:component-scan base-package="com.qf.service.impl"></context:component-scan>
     <!--3.指定连接数据库的信息-->
-    <context:property-placeholder location="classpath:db.properties"/>
+    <context:property-placeholder location="classpath:db.properties"></context:property-placeholder>
     <bean id="db" class="com.alibaba.druid.pool.DruidDataSource">
         <property name="driverClassName" value="${driver}"/>
         <property name="username" value="${uname}"/>
@@ -35,23 +31,18 @@ http://www.springframework.org/schema/mvc
     </bean>
     <!--4.创建session工厂-->
     <bean id="fac" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="db"></property>
+        <property name="dataSource" ref="db"/>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
-    <!--5.省略dao层实现类-->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.qf.dao"></property>
-        <property name="sqlSessionFactoryBeanName" value="fac"></property>
-    </bean>
-    <!--6.处理json-->
-    <mvc:annotation-driven/>
-    <!--7.事务管理-->
-    <bean id="mytx" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="db"/>
-    </bean>
-    <tx:annotation-driven transaction-manager="mytx"/>
+    <!--5.创建sqlsessionTemplate
+    <bean id="template" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="fac"/>
+    </bean>-->
 
-    <!--8.处理静态资源-->
-    <mvc:default-servlet-handler/>
+    <!--5.省略dao层实体类(代替sqlSessionTemplate)-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qf.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="fac"/>
+    </bean>
 </beans>

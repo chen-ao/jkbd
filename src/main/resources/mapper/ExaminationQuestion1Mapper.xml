@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.qf.dao.VipQuestionBankMapper">
-  <resultMap id="BaseResultMap" type="com.qf.bean.VipQuestionBank">
+<mapper namespace="com.qf.dao.ExaminationQuestion1Dao">
+  <resultMap id="BaseResultMap" type="com.qf.bean.ExaminationQuestion1">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="bankNo" jdbcType="INTEGER" property="bankno" />
     <result column="question" jdbcType="VARCHAR" property="question" />
     <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="item1" jdbcType="VARCHAR" property="item1" />
@@ -12,58 +11,40 @@
     <result column="item4" jdbcType="VARCHAR" property="item4" />
     <result column="explains" jdbcType="VARCHAR" property="explains" />
     <result column="url" jdbcType="VARCHAR" property="url" />
-    <result column="wrongnumber" jdbcType="INTEGER" property="wrongnumber" />
-    <result column="isWrong" jdbcType="INTEGER" property="iswrong" />
-    <result column="isCollected" jdbcType="INTEGER" property="iscollected" />
-    <result column="isAnswered" jdbcType="INTEGER" property="isanswered" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, bankNo, question, answer, item1, item2, item3, item4, explains, url, wrongnumber,
-    isWrong, isCollected, isAnswered
+    id, question, answer, item1, item2, item3, item4, explains, url
   </sql>
 
-  <select id="findAll" resultType="com.qf.bean.VipQuestionBank">
-    select * from vip_question_bank
+  <select id="viptest" resultMap="BaseResultMap">
+    select * from examination_question1;
   </select>
-
-  <select id="selectVipForRandom" resultType="com.qf.bean.VipQuestionBank">
-    select * from vip_question_bank order by rand()
-  </select>
-
 
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from vip_question_bank
+    from examination_question1
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from vip_question_bank
+    delete from examination_question1
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.qf.bean.VipQuestionBank">
-    insert into vip_question_bank ( id, bankNo,
-      question, answer, item1, 
-      item2, item3, item4, 
-      explains, url, wrongnumber, 
-      isWrong, isCollected, isAnswered
+  <insert id="insert" parameterType="com.qf.bean.ExaminationQuestion1">
+    insert into examination_question1 (id, question, answer, 
+      item1, item2, item3, 
+      item4, explains, url
       )
-    values (#{id,jdbcType=INTEGER}, #{bankno,jdbcType=INTEGER},
-      #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, #{item1,jdbcType=VARCHAR}, 
-      #{item2,jdbcType=VARCHAR}, #{item3,jdbcType=VARCHAR}, #{item4,jdbcType=VARCHAR}, 
-      #{explains,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{wrongnumber,jdbcType=INTEGER}, 
-      #{iswrong,jdbcType=INTEGER}, #{iscollected,jdbcType=INTEGER}, #{isanswered,jdbcType=INTEGER}
+    values (#{id,jdbcType=INTEGER}, #{question,jdbcType=VARCHAR}, #{answer,jdbcType=VARCHAR}, 
+      #{item1,jdbcType=VARCHAR}, #{item2,jdbcType=VARCHAR}, #{item3,jdbcType=VARCHAR}, 
+      #{item4,jdbcType=VARCHAR}, #{explains,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.qf.bean.VipQuestionBank">
-    insert into vip_question_bank
+  <insert id="insertSelective" parameterType="com.qf.bean.ExaminationQuestion1">
+    insert into examination_question1
     <trim prefix="(" suffix=")" suffixOverrides=",">
-
       <if test="id != null">
         id,
-      </if>
-      <if test="bankno != null">
-        bankNo,
       </if>
       <if test="question != null">
         question,
@@ -89,26 +70,10 @@
       <if test="url != null">
         url,
       </if>
-      <if test="wrongnumber != null">
-        wrongnumber,
-      </if>
-      <if test="iswrong != null">
-        isWrong,
-      </if>
-      <if test="iscollected != null">
-        isCollected,
-      </if>
-      <if test="isanswered != null">
-        isAnswered,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-
       <if test="id != null">
         #{id,jdbcType=INTEGER},
-      </if>
-      <if test="bankno != null">
-        #{bankno,jdbcType=INTEGER},
       </if>
       <if test="question != null">
         #{question,jdbcType=VARCHAR},
@@ -134,26 +99,11 @@
       <if test="url != null">
         #{url,jdbcType=VARCHAR},
       </if>
-      <if test="wrongnumber != null">
-        #{wrongnumber,jdbcType=INTEGER},
-      </if>
-      <if test="iswrong != null">
-        #{iswrong,jdbcType=INTEGER},
-      </if>
-      <if test="iscollected != null">
-        #{iscollected,jdbcType=INTEGER},
-      </if>
-      <if test="isanswered != null">
-        #{isanswered,jdbcType=INTEGER},
-      </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.qf.bean.VipQuestionBank">
-    update vip_question_bank
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.bean.ExaminationQuestion1">
+    update examination_question1
     <set>
-      <if test="bankno != null">
-        bankNo = #{bankno,jdbcType=INTEGER},
-      </if>
       <if test="question != null">
         question = #{question,jdbcType=VARCHAR},
       </if>
@@ -178,37 +128,19 @@
       <if test="url != null">
         url = #{url,jdbcType=VARCHAR},
       </if>
-      <if test="wrongnumber != null">
-        wrongnumber = #{wrongnumber,jdbcType=INTEGER},
-      </if>
-      <if test="iswrong != null">
-        isWrong = #{iswrong,jdbcType=INTEGER},
-      </if>
-      <if test="iscollected != null">
-        isCollected = #{iscollected,jdbcType=INTEGER},
-      </if>
-      <if test="isanswered != null">
-        isAnswered = #{isanswered,jdbcType=INTEGER},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.qf.bean.VipQuestionBank">
-    update vip_question_bank
-    set
-      bankNo = #{bankno,jdbcType=INTEGER},
-      question = #{question,jdbcType=VARCHAR},
+  <update id="updateByPrimaryKey" parameterType="com.qf.bean.ExaminationQuestion1">
+    update examination_question1
+    set question = #{question,jdbcType=VARCHAR},
       answer = #{answer,jdbcType=VARCHAR},
       item1 = #{item1,jdbcType=VARCHAR},
       item2 = #{item2,jdbcType=VARCHAR},
       item3 = #{item3,jdbcType=VARCHAR},
       item4 = #{item4,jdbcType=VARCHAR},
       explains = #{explains,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      wrongnumber = #{wrongnumber,jdbcType=INTEGER},
-      isWrong = #{iswrong,jdbcType=INTEGER},
-      isCollected = #{iscollected,jdbcType=INTEGER},
-      isAnswered = #{isanswered,jdbcType=INTEGER}
+      url = #{url,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

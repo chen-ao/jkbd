@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.Subject1Dao">
+  <resultMap id="BaseResultMap" type="com.qf.bean.Subject1">
+    <id column="subject1_id" jdbcType="INTEGER" property="subject1Id" />
+    <result column="subject1_question" jdbcType="VARCHAR" property="subject1Question" />
+    <result column="subject1_answer" jdbcType="INTEGER" property="subject1Answer" />
+    <result column="subject1_item1" jdbcType="VARCHAR" property="subject1Item1" />
+    <result column="subject1_item2" jdbcType="VARCHAR" property="subject1Item2" />
+    <result column="subject1_item3" jdbcType="VARCHAR" property="subject1Item3" />
+    <result column="subject1_item4" jdbcType="VARCHAR" property="subject1Item4" />
+    <result column="subject1_explains" jdbcType="VARCHAR" property="subject1Explains" />
+    <result column="subject1_url" jdbcType="VARCHAR" property="subject1Url" />
+    <result column="subject1_chapter" jdbcType="INTEGER" property="subject1Chapter" />
+    <result column="stid" jdbcType="INTEGER" property="stid" />
+    <association property="specialtype" javaType="Specialtype">
+      <id property="specialtypeid" column="specialtypeid"/>
+      <result property="specialtypename" column="specialtypename"/>
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    subject1_id, subject1_question, subject1_answer, subject1_item1, subject1_item2, 
+    subject1_item3, subject1_item4, subject1_explains, subject1_url, subject1_chapter, 
+    stid
+  </sql>
+
+  <select id="findall" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from subject1
+  </select>
+  
+
+  <select id="unfinishedtest" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from subject1 s,finished f where s.subject1_id=f.qid and f.uid=#{userid}
+  </select>
+
+  <insert id="collect" parameterType="java.util.Map">
+    insert into middle_collection(midl_sid,midl_uid) values (#{qid},#{uid})
+  </insert>
+
+  <select id="doSTtest" resultMap="BaseResultMap">
+    select * from subject1 where stid=#{stid}
+  </select>
+
+  <select id="doerrorSTtest" resultMap="BaseResultMap">
+    select * from subject1 s,finished f where s.subject1_id=f.qid and f.rwstatus=1 and s.stid=#{stid}
+  </select>
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from subject1
+    where subject1_id = #{subject1Id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from subject1
+    where subject1_id = #{subject1Id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.qf.bean.Subject1">
+    insert into subject1 (subject1_id, subject1_question, subject1_answer, 
+      subject1_item1, subject1_item2, subject1_item3, 
+      subject1_item4, subject1_explains, subject1_url, 
+      subject1_chapter, stid)
+    values (#{subject1Id,jdbcType=INTEGER}, #{subject1Question,jdbcType=VARCHAR}, #{subject1Answer,jdbcType=INTEGER}, 
+      #{subject1Item1,jdbcType=VARCHAR}, #{subject1Item2,jdbcType=VARCHAR}, #{subject1Item3,jdbcType=VARCHAR}, 
+      #{subject1Item4,jdbcType=VARCHAR}, #{subject1Explains,jdbcType=VARCHAR}, #{subject1Url,jdbcType=VARCHAR}, 
+      #{subject1Chapter,jdbcType=INTEGER}, #{stid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qf.bean.Subject1">
+    insert into subject1
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="subject1Id != null">
+        subject1_id,
+      </if>
+      <if test="subject1Question != null">
+        subject1_question,
+      </if>
+      <if test="subject1Answer != null">
+        subject1_answer,
+      </if>
+      <if test="subject1Item1 != null">
+        subject1_item1,
+      </if>
+      <if test="subject1Item2 != null">
+        subject1_item2,
+      </if>
+      <if test="subject1Item3 != null">
+        subject1_item3,
+      </if>
+      <if test="subject1Item4 != null">
+        subject1_item4,
+      </if>
+      <if test="subject1Explains != null">
+        subject1_explains,
+      </if>
+      <if test="subject1Url != null">
+        subject1_url,
+      </if>
+      <if test="subject1Chapter != null">
+        subject1_chapter,
+      </if>
+      <if test="stid != null">
+        stid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="subject1Id != null">
+        #{subject1Id,jdbcType=INTEGER},
+      </if>
+      <if test="subject1Question != null">
+        #{subject1Question,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Answer != null">
+        #{subject1Answer,jdbcType=INTEGER},
+      </if>
+      <if test="subject1Item1 != null">
+        #{subject1Item1,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item2 != null">
+        #{subject1Item2,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item3 != null">
+        #{subject1Item3,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item4 != null">
+        #{subject1Item4,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Explains != null">
+        #{subject1Explains,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Url != null">
+        #{subject1Url,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Chapter != null">
+        #{subject1Chapter,jdbcType=INTEGER},
+      </if>
+      <if test="stid != null">
+        #{stid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qf.bean.Subject1">
+    update subject1
+    <set>
+      <if test="subject1Question != null">
+        subject1_question = #{subject1Question,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Answer != null">
+        subject1_answer = #{subject1Answer,jdbcType=INTEGER},
+      </if>
+      <if test="subject1Item1 != null">
+        subject1_item1 = #{subject1Item1,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item2 != null">
+        subject1_item2 = #{subject1Item2,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item3 != null">
+        subject1_item3 = #{subject1Item3,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Item4 != null">
+        subject1_item4 = #{subject1Item4,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Explains != null">
+        subject1_explains = #{subject1Explains,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Url != null">
+        subject1_url = #{subject1Url,jdbcType=VARCHAR},
+      </if>
+      <if test="subject1Chapter != null">
+        subject1_chapter = #{subject1Chapter,jdbcType=INTEGER},
+      </if>
+      <if test="stid != null">
+        stid = #{stid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where subject1_id = #{subject1Id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qf.bean.Subject1">
+    update subject1
+    set subject1_question = #{subject1Question,jdbcType=VARCHAR},
+      subject1_answer = #{subject1Answer,jdbcType=INTEGER},
+      subject1_item1 = #{subject1Item1,jdbcType=VARCHAR},
+      subject1_item2 = #{subject1Item2,jdbcType=VARCHAR},
+      subject1_item3 = #{subject1Item3,jdbcType=VARCHAR},
+      subject1_item4 = #{subject1Item4,jdbcType=VARCHAR},
+      subject1_explains = #{subject1Explains,jdbcType=VARCHAR},
+      subject1_url = #{subject1Url,jdbcType=VARCHAR},
+      subject1_chapter = #{subject1Chapter,jdbcType=INTEGER},
+      stid = #{stid,jdbcType=INTEGER}
+    where subject1_id = #{subject1Id,jdbcType=INTEGER}
+  </update>
+</mapper>
